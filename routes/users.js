@@ -28,7 +28,7 @@ router.put("/:id", async (req, res) => {
 });
 
 //DELETE
-  /*router.delete("/:id", async (req, res) => {
+  router.delete("/:id", async (req, res) => {
   if (req.body.userId === req.params.id) {
     try {
       const user = await User.findById(req.params.id);
@@ -56,6 +56,6 @@ router.get("/:id", async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
-});*/
+});
 
 module.exports = router;

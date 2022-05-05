@@ -17,6 +17,10 @@ const UserSchema = new mongoose.Schema(
             required: true,
         //    unique: true,
         },
+        aboutAuthor:{
+            type: String,
+            default: "",
+        },
         profilepic:{
             type:String,
            default: "",

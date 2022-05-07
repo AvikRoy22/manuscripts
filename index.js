@@ -6,35 +6,28 @@ const authRoute = require("./routes/auth");
 const postRoute = require("./routes/posts");
 const categoryRoute = require("./routes/categories");
 const userRoute = require("./routes/users");
-const multer = require("multer");
+const imageRoute = require("./routes/images")
 const path = require("path");
-const cors = require('cors')
+const cors = require('cors');
+const bodyParser = require("body-parser");
 
 dotenv.config();
 app.use(cors());
 app.use(express.json());
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({
+    extended: false,
+  }));
 mongoose
   .connect(process.env.MONGOOSE_URL)
   .then(console.log('connected to mongoose'))
   .catch((err) => console.log(err));
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "images")
-  }, filename: (req, file, cb)=>{
-    cb(null, req.body.name)
-  }
-})
-
-const upload = multer({storage: storage});
-app.post("/api/upload", upload.single("file"), (req, res)=>{
-  res.status(200).json("File Uploaded");
-})
-
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
-app.use("/api/categories", categoryRoute)
+app.use("/api/categories", categoryRoute);
+app.use("/api/images", imageRoute);
 
 app.listen(9000, () => {
 

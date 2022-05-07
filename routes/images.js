@@ -3,6 +3,8 @@ const ImageModel = require('../models/image')
 const path = require("path");
 const fs = require('fs');
 const router = require('express').Router();
+const uniqueFilename = require('unique-filename');
+const os = require('os')
 
 //image upload
 const Storage = multer.diskStorage({
@@ -22,8 +24,9 @@ router.post('/upload', async (req, res) => {
             console.log(err)
         }
         else {
+            var randomPrefixedTmpfile = uniqueFilename("_", req.body.name)
             const newImage = new ImageModel({
-                name: req.body.name,
+                name: randomPrefixedTmpfile,
                 image: {
                     data: fs.readFileSync('uploads/' + req.file.filename),
                     contentType: 'image/jpg'

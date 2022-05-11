@@ -4,7 +4,7 @@ const path = require("path");
 const fs = require('fs');
 const router = require('express').Router();
 const uniqueFilename = require('unique-filename');
-const os = require('os')
+const os = require('os');
 
 //image upload
 const Storage = multer.diskStorage({
@@ -44,13 +44,18 @@ router.post('/upload', async (req, res) => {
 })
 
 router.get('/upload/:id', async (req, res) => {
-    try {
-        const allData = await ImageModel.findById(req.params.id);
-        res.status(200).json(allData);
-    } catch (error) {
-        console.log(error);
-        res.status(500);
+    if (req.params.id) {
+        try {
+            const allData = await ImageModel.findOne({ _id: req.params.id });
+            res.status(200).json(allData);
+        } catch (error) {
+            console.log(error);
+            res.status(500);
+        }
+    } else {
+        res.status(500)
     }
+
 })
 
 module.exports = router

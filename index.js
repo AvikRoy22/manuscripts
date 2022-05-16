@@ -6,7 +6,8 @@ const authRoute = require("./routes/auth");
 const postRoute = require("./routes/posts");
 const categoryRoute = require("./routes/categories");
 const userRoute = require("./routes/users");
-const imageRoute = require("./routes/images")
+const imageRoute = require("./routes/images");
+const reportRoute = require("./routes/reports");
 const path = require("path");
 const cors = require('cors');
 const bodyParser = require("body-parser");
@@ -26,9 +27,8 @@ app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
 app.use("/api/categories", categoryRoute);
 app.use("/api/images", imageRoute);
+app.use("/api/reports", reportRoute);
 
 app.listen(9000, () => {
-
   console.log("Backend is running");
-
 })

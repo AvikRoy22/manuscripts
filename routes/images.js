@@ -44,18 +44,40 @@ router.post('/upload', async (req, res) => {
 })
 
 router.get('/upload/:id', async (req, res) => {
-    if (req.params.id) {
-        try {
-            const allData = await ImageModel.findOne({ _id: req.params.id });
-            res.status(200).json(allData);
-        } catch (error) {
-            console.log(error);
-            res.status(500);
+    try {
+        let imgId = req.params.id;
+        if (imgId) {
+            try {
+                const allData = await ImageModel.findOne({ _id: imgId });
+                res.status(200).json(allData);
+            } catch (error) {
+                res.status(500);
+            }
         }
-    } else {
-        res.status(500)
+    } catch (error) {
+        res.status(500);
     }
 
+})
+
+router.delete('/upload/:id', async (req, res) => {
+    if (req.params.id){
+        try{
+            const image = await ImageModel.findOne({_id: req.params.id});
+            if(image){
+                try{
+                    await image.delete();
+                    res.status(200).json("image deleted")
+                }catch(e){
+                    res.status(500).json(e);
+                }
+            } else {
+                res.status(404).json("image not found");
+            }
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    }
 })
 
 module.exports = router

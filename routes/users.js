@@ -58,4 +58,18 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+//GET ALL USERS
+router.get('/', async (req, res) => {
+  try {
+    const users = await User.find();
+    const resData = users.map((user)=>{
+      const { password, ...others } = user._doc;
+      return others;
+    })
+    res.status(200).json(resData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+})
+
 module.exports = router;

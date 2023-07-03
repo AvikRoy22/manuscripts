@@ -29,6 +29,10 @@ app.use("/api/categories", categoryRoute);
 app.use("/api/images", imageRoute);
 app.use("/api/reports", reportRoute);
 
-app.listen(9000, () => {
+app.get("/api/test", (req, resp) =>{
+  resp.send("Server Running")
+})
+
+app.listen(process.env.PORT, () => {
   console.log("Backend is running");
 })

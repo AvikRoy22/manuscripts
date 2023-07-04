@@ -29,7 +29,7 @@ app.use("/api/categories", categoryRoute);
 app.use("/api/images", imageRoute);
 app.use("/api/reports", reportRoute);
 
-app.get("/api/test", (req, resp) =>{
+app.get("/", (req, resp) =>{
   resp.send("Server Running")
 })
 
